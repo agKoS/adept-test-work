@@ -6,13 +6,12 @@
     height: $height-500;
 }
 
-.buttons-container {
+.footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 12px;
     height: $height-40;
     margin-top: auto;
     border: $border;
-    padding-right: 12px;
+    padding: 0 12px;
 }

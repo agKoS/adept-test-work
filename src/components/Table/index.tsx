@@ -1,4 +1,6 @@
 import type { ITableSettings, TTableRowData } from "@types-components/Table";
+import { IButtonProps } from "@types-ui/Button";
+import ButtonGroup from "@ui/ButtonGroup";
 import classes from "./Table.module.scss";
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
@@ -16,6 +18,16 @@ export default function Table<T extends TTableRowData>({
 }: ITableProps<T>) {
     const { columnsState } = settings;
 
+    const buttonsSetting: IButtonProps[] = [
+        {
+            label: "Добавить",
+        },
+        {
+            label: "Удалить",
+            disabled: true,
+        },
+    ];
+
     return (
         <div className={classes.container}>
             <TableHeader settings={settings} />
@@ -24,9 +36,8 @@ export default function Table<T extends TTableRowData>({
                 columnsState={columnsState}
                 scrollCallback={scrollCallback}
             />
-            <div className={classes["buttons-container"]}>
-                <button>Добавить</button>
-                <button>Удалить</button>
+            <div className={classes.footer}>
+                <ButtonGroup settings={buttonsSetting} />
             </div>
         </div>
     );
