@@ -62,9 +62,7 @@ const createFakeData = (
             id: faker.datatype.uuid(),
             companyName: faker.company.name(),
             numberEmployees: getRandomNumber(maxEmployees),
-            address: `${faker.address.streetAddress()}, ${faker.address.cityName}, ${
-                faker.address.country
-            }`,
+            address: `${faker.address.streetAddress()}, ${faker.address.cityName()}, ${faker.address.country()}`,
         };
 
         companiesData.push(companyData);
