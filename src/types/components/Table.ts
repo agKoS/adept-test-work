@@ -1,3 +1,6 @@
+import { type ICompaniesTableRowData } from "./CompanyTable";
+import { type IEmployeesTableRowData } from "./EmployeesTable";
+
 /**
  * Состояние для столбца
  *
@@ -23,3 +26,8 @@ export interface ITableSettings<T> {
     columnsState: IColumnState<T>[];
     disabledColumns: Exclude<keyof T, "id">[];
 }
+
+/**
+ * Тип данных строки таблицы
+ */
+export type TTableRowData = ICompaniesTableRowData | IEmployeesTableRowData;

@@ -1,75 +1,9 @@
 @import "@scss-variables";
 
-$table-body-height: $height-500 - ($height-40 * 3);
-
 .container {
     display: flex;
     flex-direction: column;
     height: $height-500;
-}
-
-// .header {
-//     margin: 0;
-//     height: $height-40;
-// }
-
-.table {
-    border-spacing: 0;
-
-    th,
-    td {
-        padding: 8px 9px;
-        border: $border;
-
-        &:not(:first-child) {
-            border-left: unset;
-        }
-    }
-}
-
-// .header-container {
-//     border: $border;
-//     th {
-//         border: unset;
-
-//         &:not(:last-child) {
-//             border-right: $border;
-//         }
-//     }
-// }
-
-.table-data {
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    height: $table-body-height;
-    border: {
-        left: $border;
-        right: $border;
-    }
-}
-
-.tbody {
-    tr:not(:last-child) td {
-        border-top: unset;
-    }
-
-    tr:nth-last-child(2) td {
-        border-bottom: unset;
-    }
-
-    tr:hover {
-        background-color: $blue-alpha-6;
-        transition: all linear 0.2s;
-    }
-
-    td:first-child {
-        border-left: unset;
-    }
-
-    td:last-child {
-        border-right: unset;
-    }
 }
 
 .buttons-container {

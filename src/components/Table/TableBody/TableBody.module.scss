@@ -1,0 +1,32 @@
+@import "@scss-variables";
+
+$table-body-height: $height-500 - ($height-40 * 3);
+
+.container {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: $table-body-height;
+    border: {
+        left: $border;
+        right: $border;
+    }
+}
+
+.table {
+    border-spacing: 0;
+
+    td {
+        padding: 8px 9px;
+
+        &:not(:last-child) {
+            border-right: $border;
+        }
+    }
+}
+
+.tbody {
+    tr:not(:last-child) td {
+        border-bottom: $border;
+    }
+}
