@@ -18,9 +18,11 @@
         "baseUrl": "./src",
         "paths": {
             "@types-components/*": ["types/components/*"],
+            "@types-ui/*": ["types/ui/*"],
             "@components/*": ["components/*"],
             "@utils/*": ["utils/*"],
-            "@hooks/*": ["hooks/*"]
+            "@hooks/*": ["hooks/*"],
+            "@ui/*": ["ui/*"]
         }
     },
     "include": ["src"],

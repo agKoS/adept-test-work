@@ -1,0 +1,32 @@
+@import "@scss-variables";
+
+.button {
+    appearance: none;
+    border: $border-transparent;
+    border-radius: 5px;
+    background: $blue-60;
+    color: $white;
+    min-width: 60px;
+    text-align: center;
+    cursor: pointer;
+    padding: 4px 12px;
+
+    &:hover {
+        background: $blue-70;
+    }
+
+    &:active {
+        background-color: $blue-80;
+    }
+
+    &:focus {
+        outline: none;
+        border: $border-blue;
+    }
+
+    &:disabled {
+        background: $gray-40;
+        color: $gray-10;
+        cursor: not-allowed;
+    }
+}

@@ -8,8 +8,10 @@ module.exports = {
             "@scss-variables": resolvePath("variables.scss"),
             "@components": resolvePath("components"),
             "@types-components": resolvePath("types/components"),
+            "@types-ui": resolvePath("types/ui"),
             "@utils": resolvePath("utils"),
             "@hooks": resolvePath("hooks"),
+            "@ui": resolvePath("ui"),
         },
     },
 };
