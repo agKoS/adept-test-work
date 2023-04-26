@@ -3,9 +3,10 @@
  */
 export interface IEmployeesTableRowData {
     id: string;
-    surname: string;
-    name: string;
+    lastName: string;
+    firstName: string;
     position: string;
+    companyName: string;
 }
 
 /**
