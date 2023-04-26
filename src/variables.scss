@@ -14,13 +14,17 @@ $white: #fff;
 $black: #000;
 $black-alpha-60: rgba($black, 0.8);
 
+$red: #ed4b3f;
+
 // ---------------- Properties ----------------
 
 $border: 1px solid $color-gray;
 $border-blue: 2px solid $blue-100;
+$border-red: 2px solid $red;
 $border-transparent: 2px solid transparent;
 
 // ---------------- Sizes ----------------
 
 $height-40: 40px;
 $height-500: 500px;
+$table-body-height: $height-500 - ($height-40 * 3);
