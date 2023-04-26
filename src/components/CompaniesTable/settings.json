@@ -1,0 +1,21 @@
+{
+    "header": "Компании",
+    "columnsState": [
+        {
+            "columnHeader": "Название компании",
+            "columnName": "companyName",
+            "width": 210
+        },
+        {
+            "columnHeader": "Кол-во сотрудников",
+            "columnName": "numberEmployees",
+            "width": 160
+        },
+        {
+            "columnHeader": "Адрес",
+            "columnName": "address",
+            "width": 200
+        }
+    ],
+    "disabledColumns": ["numberEmployees"]
+}
