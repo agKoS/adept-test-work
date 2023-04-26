@@ -1,16 +1,11 @@
-$blue-alpha-6: rgba(68, 133, 223, 0.06);
-$color-gray: #ccc;
+@import "@scss-variables";
 
-$border: 1px solid $color-gray;
-
-$container-height: 500px;
-$height-40: 40px;
-$table-body-height: $container-height - ($height-40 * 3);
+$table-body-height: $height-500 - ($height-40 * 3);
 
 .container {
     display: flex;
     flex-direction: column;
-    height: $container-height;
+    height: $height-500;
 }
 
 .header {
