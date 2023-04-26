@@ -6,8 +6,8 @@ import { ITableSettings } from "@types-components/Table";
 import { companiesActions, companiesSelectors } from "state/companiesSlice";
 import { useAppSelector } from "state/hooks";
 import settings from "./settings.json";
-// import { createPortal } from "react-dom";
-// import ModalWindow from "@ui/ModalWindow";
+import { createPortal } from "react-dom";
+import AddCompanyModalWindow from "@components/AddCompanyModalWindow";
 
 /**
  * Таблица с компаниями
@@ -36,7 +36,8 @@ export default function CompaniesTable() {
                 scrollCallback={scrollCallback}
                 setShowModal={setShowModal}
             />
-            {/* {showModal && createPortal(<ModalWindow />, document.body)} */}
+            {showModal &&
+                createPortal(<AddCompanyModalWindow setShowModal={setShowModal} />, document.body)}
         </>
     );
 }

@@ -1,4 +1,9 @@
-import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
+import {
+    createEntityAdapter,
+    createSelector,
+    createSlice,
+    type PayloadAction,
+} from "@reduxjs/toolkit";
 import type { ICompaniesTableRowData } from "@types-components/CompanyTable";
 import { companiesData } from "@utils/fake-data";
 import { RootState } from "./store";
@@ -27,6 +32,9 @@ const slice = createSlice({
         },
         incrementPage: (state) => {
             state.page++;
+        },
+        addCompany: (state, action: PayloadAction<ICompaniesTableRowData>) => {
+            adapter.addOne(state, action.payload);
         },
     },
 });
