@@ -16,7 +16,7 @@ interface IHeaderCellProps {
 function HeaderCheckboxCell() {
     return (
         <th className={classes["checkbox-cell"]}>
-            <input type="checkbox" />
+            <input type="checkbox" title="Выделить всё" />
         </th>
     );
 }

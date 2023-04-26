@@ -1,7 +1,5 @@
 @import "@scss-variables";
 
-$table-body-height: $height-500 - ($height-40 * 3);
-
 .container {
     overflow-y: auto;
     display: flex;
@@ -19,15 +17,14 @@ $table-body-height: $height-500 - ($height-40 * 3);
 
     td {
         padding: 8px 9px;
+        border-bottom: $border;
 
         &:not(:last-child) {
             border-right: $border;
         }
     }
-}
 
-.tbody {
-    tr:not(:last-child) td {
-        border-bottom: $border;
+    tr:hover {
+        background-color: $blue-alpha-6;
     }
 }

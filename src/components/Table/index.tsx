@@ -23,11 +23,17 @@ export default function Table<T extends TTableRowData>({
     return (
         <div className={classes.container}>
             <TableHeader settings={settings} />
-            <TableBody
-                tableData={tableData}
-                columnsState={columnsState}
-                scrollCallback={scrollCallback}
-            />
+            {tableData.length !== 0 ? (
+                <TableBody
+                    tableData={tableData}
+                    columnsState={columnsState}
+                    scrollCallback={scrollCallback}
+                />
+            ) : (
+                <div className={classes["info-container"]}>
+                    <p>Данные отсутствуют</p>
+                </div>
+            )}
             <TableFooter setShowModal={setShowModal} />
         </div>
     );

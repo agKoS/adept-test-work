@@ -5,3 +5,15 @@
     flex-direction: column;
     height: $height-500;
 }
+
+.info-container {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    border: {
+        left: $border;
+        right: $border;
+    }
+    height: $table-body-height;
+    font-size: 24px;
+}
