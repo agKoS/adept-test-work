@@ -56,17 +56,28 @@ const createFakeData = (
 ): [ICompaniesTableRowData[], IEmployeesTableRowData[]] => {
     const companiesData: ICompaniesTableRowData[] = [];
     const employeesData: IEmployeesTableRowData[] = [];
+    const companyNames: string[] = [];
 
     for (let i = 0; i < companiesCount; i++) {
-        const companyData: ICompaniesTableRowData = {
-            id: faker.datatype.uuid(),
-            companyName: faker.company.name(),
-            numberEmployees: getRandomNumber(maxEmployees),
-            address: `${faker.address.streetAddress()}, ${faker.address.cityName()}, ${faker.address.country()}`,
-        };
+        while (true) {
+            const companyName = faker.company.name();
+            debugger;
+            if (companyNames.includes(companyName)) {
+                continue;
+            }
 
-        companiesData.push(companyData);
-        addEmployees(employeesData, companyData);
+            const companyData: ICompaniesTableRowData = {
+                id: faker.datatype.uuid(),
+                companyName,
+                numberEmployees: getRandomNumber(maxEmployees),
+                address: `${faker.address.streetAddress()}, ${faker.address.cityName()}, ${faker.address.country()}`,
+            };
+
+            companiesData.push(companyData);
+            companyNames.push(companyName);
+            addEmployees(employeesData, companyData);
+            break;
+        }
     }
 
     return [companiesData, employeesData];
