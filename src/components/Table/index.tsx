@@ -1,4 +1,5 @@
 import type { ITableSettings, TTableRowData } from "@types-components/Table";
+import { Dispatch, SetStateAction } from "react";
 import classes from "./Table.module.scss";
 import TableBody from "./TableBody";
 import TableFooter from "./TableFooter";
@@ -8,12 +9,14 @@ interface ITableProps<T extends TTableRowData> {
     settings: ITableSettings<T>;
     tableData: T[];
     scrollCallback: (event: Event) => void;
+    setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Table<T extends TTableRowData>({
     settings,
     tableData,
     scrollCallback,
+    setShowModal,
 }: ITableProps<T>) {
     const { columnsState } = settings;
 
@@ -25,7 +28,7 @@ export default function Table<T extends TTableRowData>({
                 columnsState={columnsState}
                 scrollCallback={scrollCallback}
             />
-            <TableFooter />
+            <TableFooter setShowModal={setShowModal} />
         </div>
     );
 }
