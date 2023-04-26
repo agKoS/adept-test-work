@@ -5,13 +5,3 @@
     flex-direction: column;
     height: $height-500;
 }
-
-.footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: $height-40;
-    margin-top: auto;
-    border: $border;
-    padding: 0 12px;
-}
