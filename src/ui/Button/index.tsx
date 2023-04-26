@@ -5,7 +5,7 @@ import { MouseEvent } from "react";
 /**
  * Компонент кнопки
  */
-export default function Button({ disabled, clickCallback, label }: IButtonProps) {
+export default function Button({ disabled, clickCallback, label, type = "button" }: IButtonProps) {
     const mouseDownCallback = (event: MouseEvent) => {
         event.preventDefault();
     };
@@ -16,6 +16,7 @@ export default function Button({ disabled, clickCallback, label }: IButtonProps)
             onClick={clickCallback}
             onMouseDown={mouseDownCallback}
             disabled={disabled}
+            type={type}
         >
             {label}
         </button>
