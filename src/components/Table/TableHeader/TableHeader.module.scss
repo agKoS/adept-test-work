@@ -1,0 +1,24 @@
+@import "@scss-variables";
+
+.header {
+    margin: 0;
+    height: $height-40;
+}
+
+.header-container {
+    border: $border;
+    th {
+        border: unset;
+
+        &:not(:last-child) {
+            border-right: $border;
+        }
+    }
+}
+
+.table {
+    border-spacing: 0;
+    th {
+        padding: 8px 9px;
+    }
+}

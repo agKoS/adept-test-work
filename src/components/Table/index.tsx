@@ -2,6 +2,7 @@ import type { ITableSettings } from "@types-components/Table";
 import type { ICompaniesTableRowData } from "@types-components/CompanyTable";
 import type { IEmployeesTableRowData } from "@types-components/EmployeesTable";
 import classes from "./Table.module.scss";
+import TableHeader from "./TableHeader";
 
 type TTableRowData = ICompaniesTableRowData | IEmployeesTableRowData;
 
@@ -11,23 +12,11 @@ interface ITableProps<T extends TTableRowData> {
 }
 
 export default function Table<T extends TTableRowData>({ settings, tableData }: ITableProps<T>) {
-    const { columnsState, header } = settings;
+    const { columnsState } = settings;
 
     return (
         <section className={classes.container}>
-            <h2 className={classes.header}>{header}</h2>
-            <div className={classes["header-container"]}>
-                <table className={classes.table}>
-                    <thead className={classes.header}>
-                        <th className={classes["checkbox-cell"]}>
-                            <input type="checkbox" />
-                        </th>
-                        {columnsState.map((columnState) => (
-                            <th style={{ width: columnState.width }}>{columnState.columnHeader}</th>
-                        ))}
-                    </thead>
-                </table>
-            </div>
+            <TableHeader settings={settings} />
             <div className={classes["table-data"]}>
                 <table className={classes.table}>
                     <tbody className={classes.tbody}>
