@@ -19,7 +19,8 @@
         "paths": {
             "@types-components/*": ["types/components/*"],
             "@components/*": ["components/*"],
-            "@utils/*": ["utils/*"]
+            "@utils/*": ["utils/*"],
+            "@hooks/*": ["hooks/*"]
         }
     },
     "include": ["src"],

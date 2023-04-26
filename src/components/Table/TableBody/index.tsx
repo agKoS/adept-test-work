@@ -1,9 +1,11 @@
 import { TTableRowData, type IColumnState } from "@types-components/Table";
+import { useEffect, useRef } from "react";
 import classes from "./TableBody.module.scss";
 
 interface ITableBodyProps<T extends TTableRowData> {
     tableData: T[];
     columnsState: IColumnState<T>[];
+    scrollCallback: (event: Event) => void;
 }
 
 interface IBodyRowProps<T extends TTableRowData> {
@@ -44,9 +46,23 @@ function BodyRow<T extends TTableRowData>({ rowData, columnsState }: IBodyRowPro
 export default function TableBody<T extends TTableRowData>({
     tableData,
     columnsState,
+    scrollCallback,
 }: ITableBodyProps<T>) {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const element = ref.current;
+        if (element) {
+            element.addEventListener("scroll", scrollCallback);
+        }
+
+        return () => {
+            element?.removeEventListener("scroll", scrollCallback);
+        };
+    }, [scrollCallback]);
+
     return (
-        <div className={classes.container}>
+        <div ref={ref} className={classes.container}>
             <table className={classes.table}>
                 <tbody className={classes.tbody}>
                     {tableData.map((rowData) => {

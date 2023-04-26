@@ -46,7 +46,6 @@
     "devDependencies": {
         "@craco/craco": "^7.1.0",
         "@faker-js/faker": "^7.6.0",
-        "craco-alias": "^3.0.1",
         "sass": "^1.62.0"
     }
 }

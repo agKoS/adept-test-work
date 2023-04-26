@@ -11,6 +11,7 @@ $table-body-height: $height-500 - ($height-40 * 3);
         left: $border;
         right: $border;
     }
+    scroll-behavior: smooth;
 }
 
 .table {
