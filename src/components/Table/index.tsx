@@ -14,6 +14,7 @@ interface ITableProps<T extends TTableRowData> {
     checkboxClickEventDelegation: (event: Event) => void;
     selectedRows: string[];
     selectAllCheckboxesCallback: () => void;
+    actions: any;
 }
 
 export default function Table<T extends TTableRowData>({
@@ -25,6 +26,7 @@ export default function Table<T extends TTableRowData>({
     checkboxClickEventDelegation,
     selectedRows,
     selectAllCheckboxesCallback,
+    actions,
 }: // selectedIds
 ITableProps<T>) {
     return (
@@ -41,6 +43,7 @@ ITableProps<T>) {
                     scrollCallback={scrollCallback}
                     checkboxClickEventDelegation={checkboxClickEventDelegation}
                     selectedRows={selectedRows}
+                    actions={actions}
                 />
             ) : (
                 <div className={classes["info-container"]}>

@@ -78,6 +78,7 @@ export default function EmployeeTable() {
                         checkboxClickEventDelegation={checkboxClickEventDelegation}
                         selectedRows={selectedEmployeesIds}
                         selectAllCheckboxesCallback={selectAllCheckboxesCallback}
+                        actions={employeesActions.updateCell}
                     />
                     {showAddModal &&
                         createPortal(

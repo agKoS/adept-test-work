@@ -49,6 +49,9 @@ const slice = createSlice({
         addEmployee: (state, action: PayloadAction<IEmployeesTableRowData>) => {
             adapter.addOne(state, action.payload);
         },
+        updateCell: (state, action: PayloadAction<any>) => {
+            adapter.updateOne(state, action.payload);
+        },
     },
     extraReducers: (builder) => {
         builder

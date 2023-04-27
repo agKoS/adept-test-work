@@ -76,6 +76,7 @@ export default function CompaniesTable() {
                 checkboxClickEventDelegation={checkboxClickEventDelegation}
                 selectedRows={selectedCompaniesIds}
                 selectAllCheckboxesCallback={selectAllCheckboxesCallback}
+                actions={companiesActions.updateCell}
             />
             {showAddModal &&
                 createPortal(
