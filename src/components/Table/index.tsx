@@ -9,7 +9,8 @@ interface ITableProps<T extends TTableRowData> {
     settings: ITableSettings<T>;
     tableData: T[];
     scrollCallback: (event: Event) => void;
-    setShowModal: Dispatch<SetStateAction<boolean>>;
+    setShowAddModal: Dispatch<SetStateAction<boolean>>;
+    setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
     checkboxClickEventDelegation: (event: Event) => void;
     selectedRows: string[];
     selectAllCheckboxesCallback: () => void;
@@ -19,7 +20,8 @@ export default function Table<T extends TTableRowData>({
     settings,
     tableData,
     scrollCallback,
-    setShowModal,
+    setShowAddModal,
+    setShowDeleteModal,
     checkboxClickEventDelegation,
     selectedRows,
     selectAllCheckboxesCallback,
@@ -47,7 +49,11 @@ ITableProps<T>) {
                     <p>Данные отсутствуют</p>
                 </div>
             )}
-            <TableFooter setShowModal={setShowModal} selectedRows={selectedRows} />
+            <TableFooter
+                setShowAddModal={setShowAddModal}
+                setShowDeleteModal={setShowDeleteModal}
+                selectedRows={selectedRows}
+            />
         </div>
     );
 }

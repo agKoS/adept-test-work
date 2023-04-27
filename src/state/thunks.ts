@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { INewEmployeeData } from "@types-components/AddEmployeeModalWindow";
 import { ISelectedCompanyId } from "@types-components/CompanyTable";
+import { IDeleteCompanyData } from "@types-components/DeleteCompaniesModalWindow";
 import { ISelectedEmployeeId } from "@types-components/EmployeesTable";
 
 const common = "common";
@@ -84,6 +85,13 @@ export const removeAllEmployeesThunk = createAsyncThunk(`${common}/removeAllEmpl
  */
 export const addNewEmployeeThunk = createAsyncThunk<INewEmployeeData, INewEmployeeData>(
     `${common}/addNewEmployee`,
+    (data) => {
+        return Promise.resolve(data);
+    }
+);
+
+export const deleteCompaniesThunk = createAsyncThunk<IDeleteCompanyData, IDeleteCompanyData>(
+    `${common}/deleteCompanies`,
     (data) => {
         return Promise.resolve(data);
     }

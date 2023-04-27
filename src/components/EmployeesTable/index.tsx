@@ -1,4 +1,5 @@
 import AddEmployeeModalWindow from "@components/AddEmployeeModalWindow";
+import DeleteEmployeeModalWindow from "@components/DeleteCompaniesModalWindow";
 import Table from "@components/Table";
 import { useScrollUpdate } from "@hooks/use-scroll-update";
 import { IEmployeesTableRowData, ISelectedEmployeeId } from "@types-components/EmployeesTable";
@@ -28,7 +29,9 @@ export default function EmployeeTable() {
             selectedEmployeesIds: employeesSelectors.selectSelectedEmployeeIds(state),
         }));
 
-    const [showModal, setShowModal] = useState<boolean>(false);
+    //* Открытие/закрытие модальных окон
+    const [showAddModal, setShowAddModal] = useState<boolean>(false);
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
     const needUpdateData = useMemo(() => {
         return employeesData.length < totalCount;
@@ -70,16 +73,22 @@ export default function EmployeeTable() {
                         settings={tableSettings}
                         tableData={employeesData}
                         scrollCallback={scrollCallback}
-                        setShowModal={setShowModal}
+                        setShowAddModal={setShowAddModal}
+                        setShowDeleteModal={setShowDeleteModal}
                         checkboxClickEventDelegation={checkboxClickEventDelegation}
                         selectedRows={selectedEmployeesIds}
                         selectAllCheckboxesCallback={selectAllCheckboxesCallback}
                     />
-                    {showModal &&
+                    {showAddModal &&
                         createPortal(
-                            <AddEmployeeModalWindow setShowModal={setShowModal} />,
+                            <AddEmployeeModalWindow setShowModal={setShowAddModal} />,
                             document.body
                         )}
+                    {/* {showDeleteModal &&
+                        createPortal(
+                            <DeleteEmployeeModalWindow setShowModal={setShowDeleteModal} />,
+                            document.body
+                        )} */}
                 </>
             ) : null}
         </>

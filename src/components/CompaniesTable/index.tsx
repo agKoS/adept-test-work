@@ -14,6 +14,7 @@ import {
     selectAllCompaniesThunk,
     selectCompanyThunk,
 } from "state/thunks";
+import DeleteCompaniesModalWindow from "@components/DeleteCompaniesModalWindow";
 
 /**
  * Таблица с компаниями
@@ -27,7 +28,8 @@ export default function CompaniesTable() {
         selectedCompaniesIds: companiesSelectors.selectSelectedCompanyIds(state),
     }));
 
-    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showAddModal, setShowAddModal] = useState<boolean>(false);
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
     const tableSettings = settings as ITableSettings<ICompaniesTableRowData>;
 
@@ -69,13 +71,22 @@ export default function CompaniesTable() {
                 settings={tableSettings}
                 tableData={companiesData}
                 scrollCallback={scrollCallback}
-                setShowModal={setShowModal}
+                setShowAddModal={setShowAddModal}
+                setShowDeleteModal={setShowDeleteModal}
                 checkboxClickEventDelegation={checkboxClickEventDelegation}
                 selectedRows={selectedCompaniesIds}
                 selectAllCheckboxesCallback={selectAllCheckboxesCallback}
             />
-            {showModal &&
-                createPortal(<AddCompanyModalWindow setShowModal={setShowModal} />, document.body)}
+            {showAddModal &&
+                createPortal(
+                    <AddCompanyModalWindow setShowModal={setShowAddModal} />,
+                    document.body
+                )}
+            {showDeleteModal &&
+                createPortal(
+                    <DeleteCompaniesModalWindow setShowModal={setShowDeleteModal} />,
+                    document.body
+                )}
         </>
     );
 }

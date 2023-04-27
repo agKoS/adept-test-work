@@ -5,6 +5,7 @@ import { IEmployeesTableRowData, ISelectedEmployeeId } from "@types-components/E
 import { RootState } from "./store";
 import {
     addNewEmployeeThunk,
+    deleteCompaniesThunk,
     removeAllCompaniesThunk,
     removeAllEmployeesThunk,
     removeCompanyThunk,
@@ -81,6 +82,24 @@ const slice = createSlice({
             .addCase(addNewEmployeeThunk.fulfilled, (state, action) => {
                 const { newEmployee } = action.payload;
                 adapter.addOne(state, newEmployee);
+            })
+            .addCase(deleteCompaniesThunk.fulfilled, (state, action) => {
+                const { companyIds, employeeIds } = action.payload;
+
+                state.selectedCompanyIds = state.selectedCompanyIds.filter(
+                    (companyId) => !companyIds.includes(companyId)
+                );
+
+                state.selectedEmployeeIds = state.selectedEmployeeIds.filter(
+                    (employeeId) => !employeeIds.includes(employeeId)
+                );
+
+                adapter.removeMany(state, employeeIds);
+                // const filteredEmployeeIds = state.selectedEmployeeIds.filter(
+                //     (employeeId) => !employeeIds.includes(employeeId)
+                // );
+
+                //TODO подправить отображение при изменении page
             });
     },
 });
@@ -93,14 +112,26 @@ const selectSelectedCompanyIds = (state: RootState) => state[employeesName].sele
 export const employeesSelectors = {
     ...adapterSelectors,
     selectEmployeePage,
+    //* Выбираем ID выбранных сотруднико
     selectSelectedEmployeeIds: (state: RootState) => state[employeesName].selectedEmployeeIds,
+    //* Выбираем ID выбранных компаний
     selectSelectedCompanyIds,
+    //* Выбираем сотрудников выбранных компаний для отображения в таблице
     selectEmployees: createSelector(
         [selectEmployeePage, selectSelectedCompanyIds, adapterSelectors.selectAll],
         (page, selectedCompanyIds, employees) => {
             return employees
                 .filter((employee) => selectedCompanyIds.includes(employee.companyId))
                 .slice(0, page * 15);
+        }
+    ),
+    //* Выбираем ID всех сотрудников выбранных компаний
+    selectEmployeesForSelectedCompanies: createSelector(
+        [adapterSelectors.selectAll, selectSelectedCompanyIds],
+        (employees, companyIds) => {
+            return employees
+                .filter((employee) => companyIds.includes(employee.companyId))
+                .map((employee) => employee.id);
         }
     ),
 };

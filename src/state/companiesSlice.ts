@@ -9,6 +9,7 @@ import { companiesData } from "@utils/fake-data";
 import { RootState } from "./store";
 import {
     addNewEmployeeThunk,
+    deleteCompaniesThunk,
     removeAllCompaniesThunk,
     removeCompanyThunk,
     selectAllCompaniesThunk,
@@ -70,6 +71,14 @@ const slice = createSlice({
                     id: id,
                     changes: { numberEmployees: numberEmployees + 1 },
                 });
+            })
+            .addCase(deleteCompaniesThunk.fulfilled, (state, action) => {
+                const { companyIds } = action.payload;
+                state.selectedCompanyIds = state.selectedCompanyIds.filter(
+                    (companyId) => !companyIds.includes(companyId)
+                );
+
+                adapter.removeMany(state, companyIds);
             });
     },
 });
