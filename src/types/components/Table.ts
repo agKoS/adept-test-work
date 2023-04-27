@@ -9,7 +9,7 @@ import { type IEmployeesTableRowData } from "./EmployeesTable";
  * width - ширина столбца
  */
 export interface IColumnState<T> {
-    columnName: Exclude<keyof T, "id">;
+    columnName: Exclude<keyof T, "id" | "companyId">;
     columnHeader: string;
     width: number;
 }
@@ -24,7 +24,7 @@ export interface IColumnState<T> {
 export interface ITableSettings<T> {
     header: string;
     columnsState: IColumnState<T>[];
-    disabledColumns: Exclude<keyof T, "id">[];
+    disabledColumns: Exclude<keyof T, "id" | "companyId">[];
 }
 
 /**

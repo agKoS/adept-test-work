@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ISelectedCompany } from "@types-components/CompanyTable";
+import { ISelectedCompanyId } from "@types-components/CompanyTable";
 
 const common = "common";
 
 /**
  * Добавление компании, если чекбокс в состоянии true
  */
-export const selectCompanyThunk = createAsyncThunk<ISelectedCompany, ISelectedCompany>(
+export const selectCompanyThunk = createAsyncThunk<ISelectedCompanyId, ISelectedCompanyId>(
     `${common}/selectCompany`,
     (selectedCompany) => {
         return Promise.resolve(selectedCompany);
@@ -16,7 +16,7 @@ export const selectCompanyThunk = createAsyncThunk<ISelectedCompany, ISelectedCo
 /**
  * Удаление компании, если чекбокс в состоянии false
  */
-export const removeCompanyThunk = createAsyncThunk<ISelectedCompany, ISelectedCompany>(
+export const removeCompanyThunk = createAsyncThunk<ISelectedCompanyId, ISelectedCompanyId>(
     `${common}/removeCompany`,
     (selectedCompany) => {
         return Promise.resolve(selectedCompany);
@@ -26,7 +26,7 @@ export const removeCompanyThunk = createAsyncThunk<ISelectedCompany, ISelectedCo
 /**
  * Выделить все комании в таблице
  */
-export const selectAllCompaniesThunk = createAsyncThunk<ISelectedCompany[], ISelectedCompany[]>(
+export const selectAllCompaniesThunk = createAsyncThunk<ISelectedCompanyId[], ISelectedCompanyId[]>(
     `${common}/selectAllCompanies`,
     (selectedCompanies) => {
         return Promise.resolve(selectedCompanies);

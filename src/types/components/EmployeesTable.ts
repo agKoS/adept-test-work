@@ -6,7 +6,7 @@ export interface IEmployeesTableRowData {
     lastName: string;
     firstName: string;
     position: string;
-    companyName: string;
+    companyId: string;
 }
 
 /**

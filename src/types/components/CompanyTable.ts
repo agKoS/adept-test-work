@@ -16,4 +16,4 @@ export type TCompaniesTableColumnNames = keyof ICompaniesTableRowData;
 /**
  * Данные при выборе чекбокса с компанией
  */
-export type ISelectedCompany = Pick<ICompaniesTableRowData, "id" | "companyName">;
+export type ISelectedCompanyId = string;

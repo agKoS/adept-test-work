@@ -26,7 +26,7 @@ const addEmployees = (
     employeesArray: IEmployeesTableRowData[],
     companyData: ICompaniesTableRowData
 ) => {
-    const { companyName, numberEmployees } = companyData;
+    const { id: companyId, numberEmployees } = companyData;
 
     for (let i = 0; i < numberEmployees; i++) {
         employeesArray.push({
@@ -34,7 +34,7 @@ const addEmployees = (
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             position: faker.name.jobType(),
-            companyName,
+            companyId,
         });
     }
 };

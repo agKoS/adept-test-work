@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import Table from "@components/Table";
 import { useScrollUpdate } from "@hooks/use-scroll-update";
-import { ICompaniesTableRowData, ISelectedCompany } from "@types-components/CompanyTable";
+import type { ICompaniesTableRowData, ISelectedCompanyId } from "@types-components/CompanyTable";
 import { ITableSettings } from "@types-components/Table";
 import { companiesActions, companiesSelectors } from "state/companiesSlice";
 import { useAppDispatch, useAppSelector } from "state/hooks";
@@ -24,7 +24,7 @@ export default function CompaniesTable() {
     const { companiesData, totalCount, selectedCompaniesIds } = useAppSelector((state) => ({
         companiesData: companiesSelectors.selectCompanies(state),
         totalCount: companiesSelectors.selectTotal(state),
-        selectedCompaniesIds: companiesSelectors.selectSelectedCompaniesIds(state),
+        selectedCompaniesIds: companiesSelectors.selectSelectedCompanyIds(state),
     }));
 
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -41,11 +41,8 @@ export default function CompaniesTable() {
         const checkbox = event.target as HTMLInputElement;
         const { dataset, checked } = checkbox;
 
-        if ("id" in dataset && "company" in dataset && checkbox.type === "checkbox") {
-            const companyInfo: ISelectedCompany = {
-                id: dataset["id"] as string,
-                companyName: dataset["company"] as string,
-            };
+        if ("id" in dataset && checkbox.type === "checkbox") {
+            const companyInfo: ISelectedCompanyId = dataset["id"] as string;
 
             if (checked) {
                 dispatch(selectCompanyThunk(companyInfo));
@@ -57,10 +54,9 @@ export default function CompaniesTable() {
 
     const selectAllCheckboxesCallback = useCallback(() => {
         if (selectedCompaniesIds.length < companiesData.length) {
-            const selectedCompanies: ISelectedCompany[] = companiesData.map((company) => ({
-                id: company.id,
-                companyName: company.companyName,
-            }));
+            const selectedCompanies: ISelectedCompanyId[] = companiesData.map(
+                (company) => company.id
+            );
             dispatch(selectAllCompaniesThunk(selectedCompanies));
         } else {
             dispatch(removeAllCompaniesThunk());

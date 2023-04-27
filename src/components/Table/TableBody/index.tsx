@@ -31,13 +31,7 @@ function BodyRow<T extends TTableRowData>({ rowData, columnsState, selected }: I
         <tr className={selected ? classes.selected : ""} key={rowData.id}>
             {/* <BodyCheckboxCell id={rowData.id} companyName={rowData.companyName} /> */}
             <td className={classes["checkbox-cell"]}>
-                <input
-                    data-id={rowData.id}
-                    data-company={rowData.companyName}
-                    type="checkbox"
-                    checked={selected}
-                    readOnly
-                />
+                <input data-id={rowData.id} type="checkbox" checked={selected} readOnly />
             </td>
             {anotherColumns}
         </tr>

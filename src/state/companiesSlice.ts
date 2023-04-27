@@ -4,7 +4,7 @@ import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { ICompaniesTableRowData, ISelectedCompany } from "@types-components/CompanyTable";
+import type { ICompaniesTableRowData, ISelectedCompanyId } from "@types-components/CompanyTable";
 import { companiesData } from "@utils/fake-data";
 import { RootState } from "./store";
 import {
@@ -16,14 +16,14 @@ import {
 
 export interface ICompaniesSlice {
     page: number;
-    selectedCompanies: ISelectedCompany[];
+    selectedCompanyIds: ISelectedCompanyId[];
 }
 
 export const companiesName = "companies";
 
 const initialState: ICompaniesSlice = {
     page: 1,
-    selectedCompanies: [],
+    selectedCompanyIds: [],
 };
 
 const adapter = createEntityAdapter<ICompaniesTableRowData>({
@@ -48,18 +48,18 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(selectCompanyThunk.fulfilled, (state, action) => {
-                state.selectedCompanies.push(action.payload);
+                state.selectedCompanyIds.push(action.payload);
             })
             .addCase(removeCompanyThunk.fulfilled, (state, action) => {
-                state.selectedCompanies = state.selectedCompanies.filter(
-                    (selectedCompany) => selectedCompany.id !== action.payload.id
+                state.selectedCompanyIds = state.selectedCompanyIds.filter(
+                    (selectedCompany) => selectedCompany !== action.payload
                 );
             })
             .addCase(selectAllCompaniesThunk.fulfilled, (state, action) => {
-                state.selectedCompanies = action.payload;
+                state.selectedCompanyIds = action.payload;
             })
             .addCase(removeAllCompaniesThunk.fulfilled, (state) => {
-                state.selectedCompanies.length = 0;
+                state.selectedCompanyIds.length = 0;
             });
     },
 });
@@ -68,20 +68,15 @@ const adapterSelectors = adapter.getSelectors<RootState>((state) => state[compan
 
 const selectCompanyPage = (state: RootState) => state["companies"].page;
 
-const selectSelectedCompanies = (state: RootState) => state["companies"].selectedCompanies;
-
 export const companiesSelectors = {
     ...adapterSelectors,
     selectCompanyPage,
-    selectSelectedCompanies,
+    selectSelectedCompanyIds: (state: RootState) => state["companies"].selectedCompanyIds,
     selectCompanies: createSelector(
         [selectCompanyPage, adapterSelectors.selectAll],
         (page, companies) => {
             return companies.slice(0, page * 10);
         }
-    ),
-    selectSelectedCompaniesIds: createSelector(selectSelectedCompanies, (selectedCompanies) =>
-        selectedCompanies.map((company) => company.id)
     ),
 };
 
