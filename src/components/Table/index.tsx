@@ -27,8 +27,6 @@ export default function Table<T extends TTableRowData>({
     selectAllCheckboxesCallback,
 }: // selectedIds
 ITableProps<T>) {
-    const { columnsState } = settings;
-
     return (
         <div className={classes.container}>
             <TableHeader
@@ -39,7 +37,7 @@ ITableProps<T>) {
             {tableData.length !== 0 ? (
                 <TableBody
                     tableData={tableData}
-                    columnsState={columnsState}
+                    settings={settings}
                     scrollCallback={scrollCallback}
                     checkboxClickEventDelegation={checkboxClickEventDelegation}
                     selectedRows={selectedRows}

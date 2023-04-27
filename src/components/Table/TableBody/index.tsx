@@ -1,10 +1,11 @@
-import { TTableRowData, type IColumnState } from "@types-components/Table";
+import { ITableSettings, TTableRowData, type IColumnState } from "@types-components/Table";
 import { useEffect, useRef } from "react";
 import classes from "./TableBody.module.scss";
 
 interface ITableBodyProps<T extends TTableRowData> {
     tableData: T[];
-    columnsState: IColumnState<T>[];
+    settings: ITableSettings<T>;
+    // columnsState: IColumnState<T>[];
     scrollCallback: (event: Event) => void;
     checkboxClickEventDelegation: (event: Event) => void;
     selectedRows: string[];
@@ -12,24 +13,33 @@ interface ITableBodyProps<T extends TTableRowData> {
 
 interface IBodyRowProps<T extends TTableRowData> {
     rowData: T;
-    columnsState: IColumnState<T>[];
+    settings: ITableSettings<T>;
     selected: boolean;
 }
 
 /**
  * Строка таблицы
  */
-function BodyRow<T extends TTableRowData>({ rowData, columnsState, selected }: IBodyRowProps<T>) {
-    const anotherColumns = columnsState.map((columnState) => (
-        <td
-            style={{ width: columnState["width"] }}
-            key={`${rowData.id}-${columnState.columnHeader}}`}
-        >{`${rowData[columnState.columnName]}`}</td>
-    ));
+function BodyRow<T extends TTableRowData>({
+    rowData,
+    settings: { columnsState, disabledColumns },
+    selected,
+}: IBodyRowProps<T>) {
+    const anotherColumns = columnsState.map((columnState) => {
+        const disabledColumn = disabledColumns.includes(columnState.columnName);
+
+        return (
+            <td
+                contentEditable={!disabledColumn}
+                onBlur={() => {}}
+                style={{ width: columnState["width"] }}
+                key={`${rowData.id}-${columnState.columnHeader}}`}
+            >{`${rowData[columnState.columnName]}`}</td>
+        );
+    });
 
     return (
         <tr className={selected ? classes.selected : ""} key={rowData.id}>
-            {/* <BodyCheckboxCell id={rowData.id} companyName={rowData.companyName} /> */}
             <td className={classes["checkbox-cell"]}>
                 <input data-id={rowData.id} type="checkbox" checked={selected} readOnly />
             </td>
@@ -45,7 +55,7 @@ function BodyRow<T extends TTableRowData>({ rowData, columnsState, selected }: I
  */
 export default function TableBody<T extends TTableRowData>({
     tableData,
-    columnsState,
+    settings,
     scrollCallback,
     checkboxClickEventDelegation,
     selectedRows,
@@ -83,7 +93,7 @@ export default function TableBody<T extends TTableRowData>({
                             <BodyRow
                                 key={rowData.id}
                                 rowData={rowData}
-                                columnsState={columnsState}
+                                settings={settings}
                                 selected={selectedRows.includes(rowData.id)}
                             />
                         );

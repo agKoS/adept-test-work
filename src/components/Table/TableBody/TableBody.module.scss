@@ -22,6 +22,10 @@
         &:not(:last-child) {
             border-right: $border;
         }
+
+        &:focus {
+            outline: none;
+        }
     }
 
     tr:hover {

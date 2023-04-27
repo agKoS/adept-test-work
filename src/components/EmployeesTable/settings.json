@@ -16,5 +16,6 @@
             "columnName": "position",
             "width": 150
         }
-    ]
+    ],
+    "disabledColumns": []
 }

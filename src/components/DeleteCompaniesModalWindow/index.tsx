@@ -1,4 +1,4 @@
-import { IButtonProps } from "@types-ui/Button";
+import type { IButtonProps } from "@types-ui/Button";
 import ButtonGroup from "@ui/ButtonGroup";
 import ModalWindow from "@ui/ModalWindow";
 import { Dispatch, SetStateAction, useCallback } from "react";
