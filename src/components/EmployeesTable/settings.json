@@ -1,0 +1,20 @@
+{
+    "header": "Сотрудники",
+    "columnsState": [
+        {
+            "columnHeader": "Фамилия",
+            "columnName": "lastName",
+            "width": 150
+        },
+        {
+            "columnHeader": "Имя",
+            "columnName": "firstName",
+            "width": 150
+        },
+        {
+            "columnHeader": "Должность",
+            "columnName": "position",
+            "width": 150
+        }
+    ]
+}

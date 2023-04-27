@@ -12,5 +12,9 @@ export interface IEmployeesTableRowData {
 /**
  * Имена столбцов таблицы Сотрудники
  */
-
 export type TEmployeesTableColumnNames = keyof IEmployeesTableRowData;
+
+/**
+ * Данные при выборе чекбокса с сотрудниками
+ */
+export type ISelectedEmployeeId = string;

@@ -82,6 +82,6 @@ const createFakeData = (
     return [companiesData, employeesData];
 };
 
-const [companiesData, emplyeesData] = createFakeData(100, 20);
+const [companiesData, employeesData] = createFakeData(100, 20);
 
-export { companiesData, emplyeesData };
+export { companiesData, employeesData };

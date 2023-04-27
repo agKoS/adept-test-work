@@ -42,12 +42,12 @@ export default function CompaniesTable() {
         const { dataset, checked } = checkbox;
 
         if ("id" in dataset && checkbox.type === "checkbox") {
-            const companyInfo: ISelectedCompanyId = dataset["id"] as string;
+            const companyId: ISelectedCompanyId = dataset["id"] as string;
 
             if (checked) {
-                dispatch(selectCompanyThunk(companyInfo));
+                dispatch(selectCompanyThunk(companyId));
             } else {
-                dispatch(removeCompanyThunk(companyInfo));
+                dispatch(removeCompanyThunk(companyId));
             }
         }
     };

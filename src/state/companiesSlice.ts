@@ -28,7 +28,7 @@ const initialState: ICompaniesSlice = {
 
 const adapter = createEntityAdapter<ICompaniesTableRowData>({
     selectId: (item) => item.id,
-    sortComparer: (a, b) => a.companyName.localeCompare(b.companyName),
+    sortComparer: (a, b) => a.id.localeCompare(b.id),
 });
 
 const slice = createSlice({
@@ -66,12 +66,12 @@ const slice = createSlice({
 
 const adapterSelectors = adapter.getSelectors<RootState>((state) => state[companiesName]);
 
-const selectCompanyPage = (state: RootState) => state["companies"].page;
+const selectCompanyPage = (state: RootState) => state[companiesName].page;
 
 export const companiesSelectors = {
     ...adapterSelectors,
     selectCompanyPage,
-    selectSelectedCompanyIds: (state: RootState) => state["companies"].selectedCompanyIds,
+    selectSelectedCompanyIds: (state: RootState) => state[companiesName].selectedCompanyIds,
     selectCompanies: createSelector(
         [selectCompanyPage, adapterSelectors.selectAll],
         (page, companies) => {
