@@ -2,8 +2,8 @@ import { useCallback, Dispatch, SetStateAction } from "react";
 import { useFormik } from "formik";
 import { object, ObjectSchema, string } from "yup";
 import { nanoid } from "nanoid";
-import { companiesActions } from "state/companiesSlice";
-import { useAppDispatch } from "state/hooks";
+import { companiesActions, companiesSelectors } from "state/companiesSlice";
+import { useAppDispatch, useAppSelector } from "state/hooks";
 import ModalWindow from "@ui/ModalWindow";
 import Input from "@ui/Input";
 import ButtonGroup from "@ui/ButtonGroup";
@@ -24,6 +24,10 @@ const addCompanyValidationSchema: ObjectSchema<AddCompanyFormData> = object({
 export default function AddCompanyModalWindow({ setShowModal }: IAddCompanyModalWindowProps) {
     const dispatch = useAppDispatch();
 
+    const { companyNames } = useAppSelector((state) => ({
+        companyNames: companiesSelectors.selectCompaniesName(state),
+    }));
+
     const formik = useFormik<AddCompanyFormData>({
         initialValues: {
             companyName: "",
@@ -32,6 +36,10 @@ export default function AddCompanyModalWindow({ setShowModal }: IAddCompanyModal
         validateOnChange: false,
         validationSchema: addCompanyValidationSchema,
         onSubmit: (value) => {
+            if (companyNames.includes(value.companyName)) {
+                return;
+            }
+
             const newCompany: ICompaniesTableRowData = {
                 ...value,
                 numberEmployees: 0,
