@@ -1,5 +1,5 @@
 import AddEmployeeModalWindow from "@components/AddEmployeeModalWindow";
-import DeleteEmployeeModalWindow from "@components/DeleteCompaniesModalWindow";
+import DeleteEmployeeModalWindow from "@components/DeleteEmployeeModalWindow";
 import Table from "@components/Table";
 import { useScrollUpdate } from "@hooks/use-scroll-update";
 import { IEmployeesTableRowData, ISelectedEmployeeId } from "@types-components/EmployeesTable";
@@ -84,11 +84,11 @@ export default function EmployeeTable() {
                             <AddEmployeeModalWindow setShowModal={setShowAddModal} />,
                             document.body
                         )}
-                    {/* {showDeleteModal &&
+                    {showDeleteModal &&
                         createPortal(
                             <DeleteEmployeeModalWindow setShowModal={setShowDeleteModal} />,
                             document.body
-                        )} */}
+                        )}
                 </>
             ) : null}
         </>

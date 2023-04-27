@@ -10,6 +10,7 @@ import { RootState } from "./store";
 import {
     addNewEmployeeThunk,
     deleteCompaniesThunk,
+    deletEmployeesThunk,
     removeAllCompaniesThunk,
     removeCompanyThunk,
     selectAllCompaniesThunk,
@@ -79,6 +80,10 @@ const slice = createSlice({
                 );
 
                 adapter.removeMany(state, companyIds);
+            })
+            .addCase(deletEmployeesThunk.fulfilled, (state, action) => {
+                const { companies } = action.payload;
+                adapter.upsertMany(state, companies);
             });
     },
 });

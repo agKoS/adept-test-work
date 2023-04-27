@@ -9,6 +9,7 @@ import { deleteCompaniesThunk } from "state/thunks";
 interface IDeleteCompaniesModalWindowProps {
     setShowModal: Dispatch<SetStateAction<boolean>>;
 }
+
 export default function DeleteCompaniesModalWindow({
     setShowModal,
 }: IDeleteCompaniesModalWindowProps) {

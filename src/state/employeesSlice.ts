@@ -6,6 +6,7 @@ import { RootState } from "./store";
 import {
     addNewEmployeeThunk,
     deleteCompaniesThunk,
+    deletEmployeesThunk,
     removeAllCompaniesThunk,
     removeAllEmployeesThunk,
     removeCompanyThunk,
@@ -100,6 +101,11 @@ const slice = createSlice({
                 // );
 
                 //TODO подправить отображение при изменении page
+            })
+            .addCase(deletEmployeesThunk.fulfilled, (state, action) => {
+                const { selectedEmployeeIds } = action.payload;
+                state.selectedEmployeeIds.length = 0;
+                adapter.removeMany(state, selectedEmployeeIds);
             });
     },
 });
@@ -108,12 +114,20 @@ const adapterSelectors = adapter.getSelectors<RootState>((state) => state[employ
 
 const selectEmployeePage = (state: RootState) => state[employeesName].page;
 const selectSelectedCompanyIds = (state: RootState) => state[employeesName].selectedCompanyIds;
+const selectSelectedEmployeeIds = (state: RootState) => state[employeesName].selectedEmployeeIds;
 
 export const employeesSelectors = {
     ...adapterSelectors,
     selectEmployeePage,
-    //* Выбираем ID выбранных сотруднико
-    selectSelectedEmployeeIds: (state: RootState) => state[employeesName].selectedEmployeeIds,
+    //* Выбираем ID выбранных сотрудников
+    selectSelectedEmployeeIds,
+    //* Выбираем выбранных сотрудников
+    selectSelectedEmployees: createSelector(
+        [selectSelectedEmployeeIds, adapterSelectors.selectAll],
+        (employeeIds, employees) => {
+            return employees.filter((employee) => employeeIds.includes(employee.id));
+        }
+    ),
     //* Выбираем ID выбранных компаний
     selectSelectedCompanyIds,
     //* Выбираем сотрудников выбранных компаний для отображения в таблице
