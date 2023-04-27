@@ -12,8 +12,8 @@ interface IButtonGroupProps {
 export default function ButtonGroup({ settings }: IButtonGroupProps) {
     return (
         <div className={classes.container}>
-            {settings.map((setting) => (
-                <Button {...setting} />
+            {settings.map((setting, index) => (
+                <Button key={index} {...setting} />
             ))}
         </div>
     );

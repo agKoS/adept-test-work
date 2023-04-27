@@ -28,3 +28,11 @@
         background-color: $blue-alpha-6;
     }
 }
+
+.selected.selected {
+    background-color: $blue-alpha-24;
+
+    &:hover {
+        background-color: $blue-alpha-24;
+    }
+}

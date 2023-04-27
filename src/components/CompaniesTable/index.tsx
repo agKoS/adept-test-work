@@ -1,21 +1,30 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Table from "@components/Table";
 import { useScrollUpdate } from "@hooks/use-scroll-update";
-import { ICompaniesTableRowData } from "@types-components/CompanyTable";
+import { ICompaniesTableRowData, ISelectedCompany } from "@types-components/CompanyTable";
 import { ITableSettings } from "@types-components/Table";
 import { companiesActions, companiesSelectors } from "state/companiesSlice";
-import { useAppSelector } from "state/hooks";
+import { useAppDispatch, useAppSelector } from "state/hooks";
 import settings from "./settings.json";
 import { createPortal } from "react-dom";
 import AddCompanyModalWindow from "@components/AddCompanyModalWindow";
+import {
+    removeAllCompaniesThunk,
+    removeCompanyThunk,
+    selectAllCompaniesThunk,
+    selectCompanyThunk,
+} from "state/thunks";
 
 /**
  * Таблица с компаниями
  */
 export default function CompaniesTable() {
-    const { companiesData, totalCount } = useAppSelector((state) => ({
+    const dispatch = useAppDispatch();
+
+    const { companiesData, totalCount, selectedCompaniesIds } = useAppSelector((state) => ({
         companiesData: companiesSelectors.selectCompanies(state),
         totalCount: companiesSelectors.selectTotal(state),
+        selectedCompaniesIds: companiesSelectors.selectSelectedCompaniesIds(state),
     }));
 
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -28,6 +37,36 @@ export default function CompaniesTable() {
 
     const scrollCallback = useScrollUpdate(needUpdateData, companiesActions.incrementPage);
 
+    const checkboxClickEventDelegation = (event: Event) => {
+        const checkbox = event.target as HTMLInputElement;
+        const { dataset, checked } = checkbox;
+
+        if ("id" in dataset && "company" in dataset && checkbox.type === "checkbox") {
+            const companyInfo: ISelectedCompany = {
+                id: dataset["id"] as string,
+                companyName: dataset["company"] as string,
+            };
+
+            if (checked) {
+                dispatch(selectCompanyThunk(companyInfo));
+            } else {
+                dispatch(removeCompanyThunk(companyInfo));
+            }
+        }
+    };
+
+    const selectAllCheckboxesCallback = useCallback(() => {
+        if (selectedCompaniesIds.length < companiesData.length) {
+            const selectedCompanies: ISelectedCompany[] = companiesData.map((company) => ({
+                id: company.id,
+                companyName: company.companyName,
+            }));
+            dispatch(selectAllCompaniesThunk(selectedCompanies));
+        } else {
+            dispatch(removeAllCompaniesThunk());
+        }
+    }, [selectedCompaniesIds, companiesData, dispatch]);
+
     return (
         <>
             <Table<ICompaniesTableRowData>
@@ -35,6 +74,9 @@ export default function CompaniesTable() {
                 tableData={companiesData}
                 scrollCallback={scrollCallback}
                 setShowModal={setShowModal}
+                checkboxClickEventDelegation={checkboxClickEventDelegation}
+                selectedRows={selectedCompaniesIds}
+                selectAllCheckboxesCallback={selectAllCheckboxesCallback}
             />
             {showModal &&
                 createPortal(<AddCompanyModalWindow setShowModal={setShowModal} />, document.body)}

@@ -5,9 +5,10 @@ import classes from "./TableFooter.module.scss";
 
 interface ITableFooterProps {
     setShowModal: Dispatch<SetStateAction<boolean>>;
+    selectedRows: string[];
 }
 
-export default function TableFooter({ setShowModal }: ITableFooterProps) {
+export default function TableFooter({ setShowModal, selectedRows }: ITableFooterProps) {
     const openModalWindowCallback = () => {
         setShowModal(true);
     };
@@ -19,7 +20,7 @@ export default function TableFooter({ setShowModal }: ITableFooterProps) {
         },
         {
             label: "Удалить",
-            disabled: true,
+            disabled: selectedRows.length === 0,
         },
     ];
 

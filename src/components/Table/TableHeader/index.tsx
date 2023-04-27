@@ -3,32 +3,15 @@ import classes from "./TableHeader.module.scss";
 
 interface ITableHeaderProps<T> {
     settings: ITableSettings<T>;
+    selectAllCheckboxesCallback: () => void;
+    selectedCheckbox: boolean;
 }
 
-interface IHeaderCellProps {
-    width: number;
-    columnHeader: string;
-}
-
-/**
- * Ячейка заголовка с чекбоксом
- */
-function HeaderCheckboxCell() {
-    return (
-        <th className={classes["checkbox-cell"]}>
-            <input type="checkbox" title="Выделить всё" />
-        </th>
-    );
-}
-
-/**
- * Ячейка заголовка
- */
-function HeaderCell({ width, columnHeader }: IHeaderCellProps) {
-    return <th style={{ width }}>{columnHeader}</th>;
-}
-
-export default function TableHeader<T>({ settings }: ITableHeaderProps<T>) {
+export default function TableHeader<T>({
+    settings,
+    selectAllCheckboxesCallback,
+    selectedCheckbox,
+}: ITableHeaderProps<T>) {
     const { columnsState, header } = settings;
     return (
         <>
@@ -36,13 +19,25 @@ export default function TableHeader<T>({ settings }: ITableHeaderProps<T>) {
             <div className={classes["header-container"]}>
                 <table className={classes.table}>
                     <thead>
-                        <HeaderCheckboxCell />
-                        {columnsState.map((columnState) => (
-                            <HeaderCell
-                                width={columnState.width}
-                                columnHeader={columnState.columnHeader}
-                            />
-                        ))}
+                        <tr>
+                            <th className={classes["checkbox-cell"]}>
+                                <input
+                                    type="checkbox"
+                                    title="Выделить всё"
+                                    onClick={selectAllCheckboxesCallback}
+                                    checked={selectedCheckbox}
+                                    readOnly
+                                />
+                            </th>
+                            {columnsState.map((columnState) => (
+                                <th
+                                    key={`${columnState.width}-${columnState.columnHeader}`}
+                                    style={{ width: columnState.width }}
+                                >
+                                    {columnState.columnHeader}
+                                </th>
+                            ))}
+                        </tr>
                     </thead>
                 </table>
             </div>

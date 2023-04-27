@@ -6,28 +6,20 @@ interface ITableBodyProps<T extends TTableRowData> {
     tableData: T[];
     columnsState: IColumnState<T>[];
     scrollCallback: (event: Event) => void;
+    checkboxClickEventDelegation: (event: Event) => void;
+    selectedRows: string[];
 }
 
 interface IBodyRowProps<T extends TTableRowData> {
     rowData: T;
     columnsState: IColumnState<T>[];
-}
-
-/**
- * Ячейка с чекбоксом
- */
-function BodyCheckboxCell() {
-    return (
-        <td className={classes["checkbox-cell"]}>
-            <input type="checkbox" />
-        </td>
-    );
+    selected: boolean;
 }
 
 /**
  * Строка таблицы
  */
-function BodyRow<T extends TTableRowData>({ rowData, columnsState }: IBodyRowProps<T>) {
+function BodyRow<T extends TTableRowData>({ rowData, columnsState, selected }: IBodyRowProps<T>) {
     const anotherColumns = columnsState.map((columnState) => (
         <td
             style={{ width: columnState["width"] }}
@@ -36,22 +28,38 @@ function BodyRow<T extends TTableRowData>({ rowData, columnsState }: IBodyRowPro
     ));
 
     return (
-        <tr key={rowData.id}>
-            <BodyCheckboxCell />
+        <tr className={selected ? classes.selected : ""} key={rowData.id}>
+            {/* <BodyCheckboxCell id={rowData.id} companyName={rowData.companyName} /> */}
+            <td className={classes["checkbox-cell"]}>
+                <input
+                    data-id={rowData.id}
+                    data-company={rowData.companyName}
+                    type="checkbox"
+                    checked={selected}
+                    readOnly
+                />
+            </td>
             {anotherColumns}
         </tr>
     );
 }
 
+/**
+ * Часть таблицы с данными
+ *
+ * @returns
+ */
 export default function TableBody<T extends TTableRowData>({
     tableData,
     columnsState,
     scrollCallback,
+    checkboxClickEventDelegation,
+    selectedRows,
 }: ITableBodyProps<T>) {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef(null);
 
     useEffect(() => {
-        const element = ref.current;
+        const element = ref.current as HTMLElement | null;
         if (element) {
             element.addEventListener("scroll", scrollCallback);
         }
@@ -60,6 +68,17 @@ export default function TableBody<T extends TTableRowData>({
             element?.removeEventListener("scroll", scrollCallback);
         };
     }, [scrollCallback]);
+
+    useEffect(() => {
+        const element = ref.current as HTMLElement | null;
+        if (element) {
+            element.addEventListener("click", checkboxClickEventDelegation);
+        }
+
+        return () => {
+            element?.removeEventListener("click", checkboxClickEventDelegation);
+        };
+    });
 
     return (
         <div ref={ref} className={classes.container}>
@@ -71,6 +90,7 @@ export default function TableBody<T extends TTableRowData>({
                                 key={rowData.id}
                                 rowData={rowData}
                                 columnsState={columnsState}
+                                selected={selectedRows.includes(rowData.id)}
                             />
                         );
                     })}

@@ -61,7 +61,6 @@ const createFakeData = (
     for (let i = 0; i < companiesCount; i++) {
         while (true) {
             const companyName = faker.company.name();
-            debugger;
             if (companyNames.includes(companyName)) {
                 continue;
             }
