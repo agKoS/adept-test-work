@@ -16,7 +16,7 @@ function App() {
 
     return (
         <div className={classes.container}>
-            <div style={{ marginRight: "auto" }}>
+            <div style={{ marginRight: "auto", flexShrink: 0 }}>
                 <CompaniesTable />
             </div>
 

@@ -99,11 +99,6 @@ const slice = createSlice({
                 );
 
                 adapter.removeMany(state, employeeIds);
-                // const filteredEmployeeIds = state.selectedEmployeeIds.filter(
-                //     (employeeId) => !employeeIds.includes(employeeId)
-                // );
-
-                //TODO подправить отображение при изменении page
             })
             .addCase(deletEmployeesThunk.fulfilled, (state, action) => {
                 const { selectedEmployeeIds } = action.payload;

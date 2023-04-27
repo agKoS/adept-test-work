@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     height: $height-500;
+    flex-shrink: 0;
 }
 
 .info-container {
