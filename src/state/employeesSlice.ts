@@ -4,6 +4,7 @@ import { ISelectedCompanyId } from "@types-components/CompanyTable";
 import { IEmployeesTableRowData, ISelectedEmployeeId } from "@types-components/EmployeesTable";
 import { RootState } from "./store";
 import {
+    addNewEmployeeThunk,
     removeAllCompaniesThunk,
     removeAllEmployeesThunk,
     removeCompanyThunk,
@@ -76,6 +77,10 @@ const slice = createSlice({
             })
             .addCase(removeAllEmployeesThunk.fulfilled, (state) => {
                 state.selectedEmployeeIds.length = 0;
+            })
+            .addCase(addNewEmployeeThunk.fulfilled, (state, action) => {
+                const { newEmployee } = action.payload;
+                adapter.addOne(state, newEmployee);
             });
     },
 });

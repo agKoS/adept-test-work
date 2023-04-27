@@ -1,8 +1,10 @@
+import AddEmployeeModalWindow from "@components/AddEmployeeModalWindow";
 import Table from "@components/Table";
 import { useScrollUpdate } from "@hooks/use-scroll-update";
 import { IEmployeesTableRowData, ISelectedEmployeeId } from "@types-components/EmployeesTable";
 import { ITableSettings } from "@types-components/Table";
 import { useCallback, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { employeesActions, employeesSelectors } from "state/employeesSlice";
 import { useAppDispatch, useAppSelector } from "state/hooks";
 import {
@@ -63,15 +65,22 @@ export default function EmployeeTable() {
     return (
         <>
             {selectedCompaniesIds.length > 0 ? (
-                <Table<IEmployeesTableRowData>
-                    settings={tableSettings}
-                    tableData={employeesData}
-                    scrollCallback={scrollCallback}
-                    setShowModal={setShowModal}
-                    checkboxClickEventDelegation={checkboxClickEventDelegation}
-                    selectedRows={selectedEmployeesIds}
-                    selectAllCheckboxesCallback={selectAllCheckboxesCallback}
-                />
+                <>
+                    <Table<IEmployeesTableRowData>
+                        settings={tableSettings}
+                        tableData={employeesData}
+                        scrollCallback={scrollCallback}
+                        setShowModal={setShowModal}
+                        checkboxClickEventDelegation={checkboxClickEventDelegation}
+                        selectedRows={selectedEmployeesIds}
+                        selectAllCheckboxesCallback={selectAllCheckboxesCallback}
+                    />
+                    {showModal &&
+                        createPortal(
+                            <AddEmployeeModalWindow setShowModal={setShowModal} />,
+                            document.body
+                        )}
+                </>
             ) : null}
         </>
     );

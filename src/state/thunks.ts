@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { INewEmployeeData } from "@types-components/AddEmployeeModalWindow";
 import { ISelectedCompanyId } from "@types-components/CompanyTable";
 import { ISelectedEmployeeId } from "@types-components/EmployeesTable";
 
@@ -77,3 +78,13 @@ export const selectAllEmployeesThunk = createAsyncThunk<
 export const removeAllEmployeesThunk = createAsyncThunk(`${common}/removeAllEmployees`, () => {
     return Promise.resolve();
 });
+
+/**
+ * Добавление нового сотрудника
+ */
+export const addNewEmployeeThunk = createAsyncThunk<INewEmployeeData, INewEmployeeData>(
+    `${common}/addNewEmployee`,
+    (data) => {
+        return Promise.resolve(data);
+    }
+);

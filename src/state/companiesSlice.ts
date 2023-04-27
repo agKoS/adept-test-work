@@ -8,6 +8,7 @@ import type { ICompaniesTableRowData, ISelectedCompanyId } from "@types-componen
 import { companiesData } from "@utils/fake-data";
 import { RootState } from "./store";
 import {
+    addNewEmployeeThunk,
     removeAllCompaniesThunk,
     removeCompanyThunk,
     selectAllCompaniesThunk,
@@ -60,6 +61,15 @@ const slice = createSlice({
             })
             .addCase(removeAllCompaniesThunk.fulfilled, (state) => {
                 state.selectedCompanyIds.length = 0;
+            })
+            .addCase(addNewEmployeeThunk.fulfilled, (state, action) => {
+                const {
+                    company: { id, numberEmployees },
+                } = action.payload;
+                adapter.updateOne(state, {
+                    id: id,
+                    changes: { numberEmployees: numberEmployees + 1 },
+                });
             });
     },
 });
@@ -68,16 +78,37 @@ const adapterSelectors = adapter.getSelectors<RootState>((state) => state[compan
 
 const selectCompanyPage = (state: RootState) => state[companiesName].page;
 
+const selectSelectedCompanyIds = (state: RootState) => state[companiesName].selectedCompanyIds;
+
+/**
+ * Получение компний для отображения на странице
+ */
+const selectCompanies = createSelector(
+    [selectCompanyPage, adapterSelectors.selectAll],
+    (page, companies) => {
+        return companies.slice(0, page * 10);
+    }
+);
+
+const selectSelectedCompanies = createSelector(
+    [selectSelectedCompanyIds, selectCompanies],
+    (companyIds, companies) => {
+        return companies.filter((company) => companyIds.includes(company.id));
+    }
+);
+
 export const companiesSelectors = {
     ...adapterSelectors,
     selectCompanyPage,
-    selectSelectedCompanyIds: (state: RootState) => state[companiesName].selectedCompanyIds,
-    selectCompanies: createSelector(
-        [selectCompanyPage, adapterSelectors.selectAll],
-        (page, companies) => {
-            return companies.slice(0, page * 10);
-        }
-    ),
+    selectSelectedCompanyIds,
+    selectCompanies,
+    selectCompaniesName: createSelector(adapterSelectors.selectAll, (companies) => {
+        return companies.map((company) => company.companyName);
+    }),
+    selectSelectedCompanies,
+    selectSelectedCompaniesName: createSelector([selectSelectedCompanies], (companies) => {
+        return companies.map((company) => company.companyName);
+    }),
 };
 
 export const companiesReducer = slice.reducer;
